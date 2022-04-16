@@ -29,7 +29,8 @@ git checkout $cur_branch
 # Expected failure on first run
 git notes --ref cache_history show $ref_hash > .custom_cache/.apply_errors && true
 if [ $? -eq 0 ]; then
-    ./scripts/compare_errors.py || cleanup
+    # Doesn't matter how good it is: assign this result to commit
+    ./scripts/compare_errors.py && true
     ./scripts/write_errors_cache.py
     git notes --ref cache_history add -F .custom_cache/.apply_errors
     git push origin refs/notes/cache_history

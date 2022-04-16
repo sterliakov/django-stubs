@@ -34,6 +34,8 @@ jobs:
         python-version: ['3.9']
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
@@ -42,10 +44,9 @@ jobs:
         run: |
           pip install -U pip setuptools wheel
           pip install -r ./requirements.txt
-      - name: Check against Django code
-        run: |
           pip install 'Django>=3.2,<4.0' isort mypy types-pytz types-PyYAML types-docutils types-geoip2
-          ./scripts/compare_to_master.sh
+      - name: Check against Django code
+        run: ./scripts/compare_to_master.sh
 
   test:
     runs-on: ubuntu-latest

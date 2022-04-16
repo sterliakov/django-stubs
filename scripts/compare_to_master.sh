@@ -11,14 +11,14 @@ cur_branch=$(git branch --show-current)
 old_advice=$(git config --get advice.detachedHead) && true
 
 # Will compare to master.
-git remote add tmp_upstream https://github.com/typeddjango/django-stubs || cleanup
+git remote add tmp_upstream https://github.com/sterliakov/django-stubs || cleanup
 git fetch tmp_upstream --quiet
 
 # Fetch last cache.
 mkdir -p .custom_cache/
 cur_hash=$(git rev-parse HEAD)  # Actual commit we're testing
 git fetch tmp_upstream refs/notes/*:refs/notes/*  --quiet # Use * so that it won't fail on first run
-git checkout tmp_upstream/master --quiet || cleanup
+git checkout tmp_upstream/test_ci_1 --quiet || cleanup
 
 ref_hash=$(git rev-parse HEAD)  # Try to compare with master
 if [ "$ref_hash" = "$cur_hash" ]; then  # Already on master; use previous commit

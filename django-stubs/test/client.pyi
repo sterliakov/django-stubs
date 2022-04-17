@@ -132,21 +132,21 @@ class Client(ClientMixin, RequestFactory[_MonkeyPatchedHttpResponseBase[WSGIRequ
     def __init__(
         self, enforce_csrf_checks: bool = ..., raise_request_exception: bool = ..., **defaults: Any
     ) -> None: ...
-    # Silence type warnings, since this class overrides arguments and return types in an unsafe manner.
+    # Silence type warnings, since this class overrides arguments (adds 'follow') in an unsafe manner.
     def request(self, **request: Any) -> _MonkeyPatchedHttpResponseBase[WSGIRequest]: ...
-    def get(  # type: ignore
+    def get(  # type: ignore[override]
         self, path: str, data: Any = ..., follow: bool = ..., secure: bool = ..., **extra: Any
     ) -> _MonkeyPatchedHttpResponseBase[WSGIRequest]: ...
-    def post(  # type: ignore
+    def post(  # type: ignore[override]
         self, path: str, data: Any = ..., content_type: str = ..., follow: bool = ..., secure: bool = ..., **extra: Any
     ) -> _MonkeyPatchedHttpResponseBase[WSGIRequest]: ...
-    def head(  # type: ignore
+    def head(  # type: ignore[override]
         self, path: str, data: Any = ..., follow: bool = ..., secure: bool = ..., **extra: Any
     ) -> _MonkeyPatchedHttpResponseBase[WSGIRequest]: ...
-    def trace(  # type: ignore
+    def trace(  # type: ignore[override]
         self, path: str, data: Any = ..., follow: bool = ..., secure: bool = ..., **extra: Any
     ) -> _MonkeyPatchedHttpResponseBase[WSGIRequest]: ...
-    def options(  # type: ignore
+    def options(  # type: ignore[override]
         self,
         path: str,
         data: Union[Dict[str, str], str] = ...,
@@ -155,13 +155,13 @@ class Client(ClientMixin, RequestFactory[_MonkeyPatchedHttpResponseBase[WSGIRequ
         secure: bool = ...,
         **extra: Any
     ) -> _MonkeyPatchedHttpResponseBase[WSGIRequest]: ...
-    def put(  # type: ignore
+    def put(  # type: ignore[override]
         self, path: str, data: Any = ..., content_type: str = ..., follow: bool = ..., secure: bool = ..., **extra: Any
     ) -> _MonkeyPatchedHttpResponseBase[WSGIRequest]: ...
-    def patch(  # type: ignore
+    def patch(  # type: ignore[override]
         self, path: str, data: Any = ..., content_type: str = ..., follow: bool = ..., secure: bool = ..., **extra: Any
     ) -> _MonkeyPatchedHttpResponseBase[WSGIRequest]: ...
-    def delete(  # type: ignore
+    def delete(  # type: ignore[override]
         self, path: str, data: Any = ..., content_type: str = ..., follow: bool = ..., secure: bool = ..., **extra: Any
     ) -> _MonkeyPatchedHttpResponseBase[WSGIRequest]: ...
 
@@ -173,4 +173,5 @@ class AsyncClient(ClientMixin, AsyncRequestFactory[_MonkeyPatchedHttpResponseBas
     def __init__(
         self, enforce_csrf_checks: bool = ..., raise_request_exception: bool = ..., **defaults: Any
     ) -> None: ...
-    async def request(self, **request: Any) -> _MonkeyPatchedHttpResponseBase[ASGIRequest]: ...  # type: ignore
+    # Unsafe thanks to `await`
+    async def request(self, **request: Any) -> _MonkeyPatchedHttpResponseBase[ASGIRequest]: ...  # type: ignore[override]

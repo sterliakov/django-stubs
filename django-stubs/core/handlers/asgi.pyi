@@ -34,11 +34,11 @@ class ASGIRequest(HttpRequest):
     META: Dict[str, Any] = ...
     def __init__(self, scope: Mapping[str, Any], body_file: IO[bytes]) -> None: ...
     @property
-    def GET(self) -> QueryDict: ...  # type: ignore
+    def GET(self) -> QueryDict: ...  # type: ignore[override]
     POST: QueryDict = ...
     FILES: MultiValueDict = ...
     @property
-    def COOKIES(self) -> Dict[str, str]: ...  # type: ignore
+    def COOKIES(self) -> Dict[str, str]: ...  # type: ignore[override]
 
 _T = TypeVar("_T")
 

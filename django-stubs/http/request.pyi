@@ -102,7 +102,7 @@ class QueryDict(MultiValueDict[str, str]):
     def appendlist(self, key: Union[str, bytes], value: Union[str, bytes]) -> None: ...
     def urlencode(self, safe: Optional[str] = ...) -> str: ...
     @classmethod
-    def fromkeys(  # type: ignore
+    def fromkeys(  # type: ignore[override]
         cls: Type[_Q],
         iterable: Iterable[Union[bytes, str]],
         value: Union[str, bytes] = ...,

@@ -3,8 +3,10 @@
 set -euxo pipefail
 cleanup() {
     git remote remove tmp_upstream > /dev/null
-    git checkout $cur_branch > /dev/null
-    git branch -D upstream_master > /dev/null
+    if [ ! -z $cur_branch ]; then
+        git checkout $cur_branch > /dev/null
+        git branch -D upstream_master > /dev/null
+    fi
 }
 
 cur_branch=$(git branch --show-current)
@@ -17,14 +19,13 @@ git fetch tmp_upstream
 mkdir -p .custom_cache/
 cur_hash=$(git rev-parse HEAD)  # Actual commit we're testing
 git fetch tmp_upstream refs/notes/*:refs/notes/*  --quiet # Use * so that it won't fail on first run
-git checkout -b upstream_master --track tmp_upstream/test_ci_master || (cleanup && exit 2)
+ref_branch=tmp_upstream/test_ci_master
 
-git rev-parse upstream_master^
 # Try to compare with master
-ref_hash=$(git rev-parse upstream_master)
+ref_hash=$(git rev-parse $ref_branch)
 if [ "$ref_hash" = "$cur_hash" ]; then
     # Already on master; compare to previous commit
-    ref_hash=$(git rev-parse upstream_master^)
+    ref_hash=$(git rev-parse $ref_branch^)
 fi
 
 # Get result of run on ref_hash (should fail on first workflow run)

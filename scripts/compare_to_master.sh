@@ -10,14 +10,14 @@ cleanup() {
 cur_branch=$(git branch --show-current)
 
 # Will compare to master.
-git remote add tmp_upstream https://github.com/typeddjango/django-stubs || (cleanup && exit 2)
+git remote add tmp_upstream https://github.com/sterliakov/django-stubs || (cleanup && exit 2)
 git fetch tmp_upstream
 
 # Fetch last cache.
 mkdir -p .custom_cache/
 cur_hash=$(git rev-parse HEAD)  # Actual commit we're testing
 git fetch tmp_upstream refs/notes/*:refs/notes/*  --quiet # Use * so that it won't fail on first run
-git checkout -b upstream_master --track tmp_upstream/master || (cleanup && exit 2)
+git checkout -b upstream_master --track tmp_upstream/test_ci_master || (cleanup && exit 2)
 
 git rev-parse upstream_master^
 # Try to compare with master

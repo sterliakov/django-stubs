@@ -1,7 +1,9 @@
+import socket
 import socketserver
 from io import BytesIO
 from typing import Any, Dict
 from wsgiref import simple_server
+from wsgiref.headers import Headers
 
 from django.core.handlers.wsgi import WSGIHandler, WSGIRequest
 from django.core.wsgi import get_wsgi_application as get_wsgi_application  # noqa: F401
@@ -9,18 +11,20 @@ from django.core.wsgi import get_wsgi_application as get_wsgi_application  # noq
 class WSGIServer(simple_server.WSGIServer):
     request_queue_size: int = ...
     address_family: Any = ...
-    allow_reuse_address: Any = ...
+    allow_reuse_address: bool = ...
     def __init__(self, *args: Any, ipv6: bool = ..., allow_reuse_address: bool = ..., **kwargs: Any) -> None: ...
     def handle_error(self, request: Any, client_address: Any) -> None: ...
 
 class ThreadedWSGIServer(socketserver.ThreadingMixIn, WSGIServer): ...
 
 class ServerHandler(simple_server.ServerHandler):
+    request_handler: WSGIRequestHandler
+    headers: Headers
     def handle_error(self) -> None: ...
 
 class WSGIRequestHandler(simple_server.WSGIRequestHandler):
     close_connection: bool
-    connection: WSGIRequest  # type: ignore[assignment]
+    connection: socket.socket
     request: WSGIRequest
     rfile: BytesIO
     wfile: BytesIO

@@ -20,14 +20,14 @@ write_cache() {
 cur_branch=$(git branch --show-current)
 
 # Will compare to master.
-git remote add tmp_upstream https://github.com/typeddjango/django-stubs || (cleanup && exit 2)
+git remote add tmp_upstream https://github.com/sterliakov/django-stubs || (cleanup && exit 2)
 git fetch tmp_upstream --quiet
 
 # Fetch last cache.
 mkdir -p .custom_cache/
 cur_hash=$(git rev-parse HEAD)  # Actual commit we're testing
 git fetch tmp_upstream refs/notes/*:refs/notes/*  --quiet # Use * so that it won't fail on first run
-git checkout tmp_upstream/master --quiet || (cleanup && exit 2)
+git checkout tmp_upstream/test_ci_master --quiet || (cleanup && exit 2)
 
 # Try to compare with master
 ref_hash=$(git rev-parse HEAD)

@@ -3,8 +3,10 @@
 set -euxo pipefail
 cleanup() {
     git remote remove tmp_upstream > /dev/null
-    git checkout $cur_branch > /dev/null
-    git branch -D upstream_master > /dev/null
+    if [ ! -z $cur_branch ]; then
+        git checkout $cur_branch > /dev/null
+        git branch -D upstream_master > /dev/null
+    fi
 }
 
 cur_branch=$(git branch --show-current)

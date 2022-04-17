@@ -19,7 +19,6 @@ cur_hash=$(git rev-parse HEAD)  # Actual commit we're testing
 git fetch tmp_upstream refs/notes/*:refs/notes/*  --quiet # Use * so that it won't fail on first run
 git checkout -b upstream_master --track tmp_upstream/test_ci_master || (cleanup && exit 2)
 
-git rev-parse upstream_master^
 # Try to compare with master
 ref_hash=$(git rev-parse upstream_master)
 if [ "$ref_hash" = "$cur_hash" ]; then

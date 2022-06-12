@@ -28,7 +28,7 @@ fi
 # Switch to master
 # git checkout tmp_upstream_12753/master
 git checkout tmp_upstream_12753/ci_test
-./scripts/reapply_types.py --print -o .custom_cache/master.json
+./scripts/reapply_types.py --print -o master.json
 
 ./scripts/compare_errors.py local.json master.json
 

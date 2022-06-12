@@ -33,6 +33,7 @@ if TYPE_CHECKING:
 
 
 CURRENT_DIR = (Path(__file__) / ".." / "..").resolve()
+CACHE_DIR = CURRENT_DIR / '.custom_cache'
 
 _ContainerT = Union[ast.Module, ast.AsyncFunctionDef, ast.FunctionDef, ast.ClassDef, ast.If, ast.Try]
 _ContainerTypes = (ast.Module, ast.AsyncFunctionDef, ast.FunctionDef, ast.ClassDef, ast.If, ast.Try)

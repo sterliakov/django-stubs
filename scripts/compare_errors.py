@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 from collections import defaultdict
 from typing import Dict, Generator, List, Set
 
-from reapply_types import MetaDict, CURRENT_DIR
+from reapply_types import MetaDict, CURRENT_DIR, CACHE_DIR
 
 
 def build_mypy_errors_cache(output: str) -> Dict[str, List[int]]:
@@ -113,9 +113,9 @@ if __name__ == "__main__":
 
     sys.path.insert(0, str(CURRENT_DIR))
 
-    with open(args.ref) as meta_file:
+    with open(CACHE_DIR / args.ref) as meta_file:
         old_meta = json.load(meta_file)
-    with open(args.curr) as meta_file:
+    with open(CACHE_DIR / args.curr) as meta_file:
         new_meta = json.load(meta_file)
 
     compare(new_meta, old_meta)

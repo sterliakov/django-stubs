@@ -15,7 +15,7 @@ git fetch tmp_upstream_12753 --quiet
 
 # Write cache for local version
 mkdir -p .custom_cache/
-./scripts/reapply_types.py --print -o .custom_cache/local.json
+./scripts/reapply_types.py --print -o local.json
 
 # Check if there are local unstaged changes
 curr_branch=$(git branch --show-current)
@@ -26,9 +26,9 @@ fi
 
 # Switch to master
 git checkout tmp_upstream_12753/master
-./scripts/reapply_types.py --print -o .custom_cache/master.json
+./scripts/reapply_types.py --print -o master.json
 
-./scripts/compare_errors.py .custom_cache/local.json .custom_cache/master.json
+./scripts/compare_errors.py local.json master.json
 
 cleanup
 exit $result

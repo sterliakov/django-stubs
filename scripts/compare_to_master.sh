@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 cleanup() {
-    git checkout $curr_branch
+    git checkout "$curr_branch"
     if [ "$should_stash" -eq 1 ]; then
         git stash pop
     fi
@@ -16,21 +16,20 @@ git fetch tmp_upstream_12753 --quiet
 
 # Write cache for local version
 mkdir -p .custom_cache/
-./scripts/reapply_types.py --print -o local.json
+./scripts/reapply_types.py -o local.json "$@"
 
 # Check if there are local unstaged changes
 curr_branch=$(git branch --show-current)
-should_stash=$([ $(git diff | wc -l) ] && echo 1 || echo 0)
+should_stash=$([ "$(git diff | wc -l)" ] && echo 1 || echo 0)
 if [ "$should_stash" -eq 1 ]; then
     git stash
 fi
 
 # Switch to master
 # git checkout tmp_upstream_12753/master
-git checkout tmp_upstream_12753/ci_test
-./scripts/reapply_types.py --print -o master.json
+git checkout tmp_upstream_12753/ci_test >& /dev/null
+./scripts/reapply_types.py -o master.json "$@"
 
 ./scripts/compare_errors.py local.json master.json
 
 cleanup
-exit $result

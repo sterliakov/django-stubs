@@ -408,8 +408,8 @@
         from myapp.models import MyModel
         reveal_type(MyModel.on_site)  # N: Revealed type is "django.contrib.sites.managers.CurrentSiteManager[myapp.models.MyModel]"
     installed_apps:
-        - myapp
         - django.contrib.sites
+        - myapp
     files:
         -   path: myapp/__init__.py
         -   path: myapp/models.py

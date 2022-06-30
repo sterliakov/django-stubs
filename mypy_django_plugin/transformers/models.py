@@ -56,8 +56,6 @@ class ModelClassInitializer:
     def run(self) -> None:
         model_cls = self.django_context.get_model_class_by_fullname(self.model_classdef.fullname)
         if model_cls is None:
-            if 'sites' in self.model_classdef.fullname:
-                print(f"Model {self.model_classdef.fullname} not found")
             return
         self.run_with_model_cls(model_cls)
 

@@ -46,8 +46,6 @@ jobs:
           pip install -r ./requirements.txt
 
       - name: Run tests
-        run: pytest --mypy-ini-file=mypy.ini -k regression_
-      - name: Run tests
         run: pytest --mypy-ini-file=mypy.ini
 
   typecheck:
